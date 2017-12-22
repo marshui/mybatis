@@ -1,7 +1,71 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cn.marsma.mybatis.mapper.EmployeeMapper" >
-    <select id="findEmployee" resultType="cn.marsma.mybatis.entity.Employee">
+    <select id="findEmployee" parameterType="employee" resultType="employee">
     	select * from employee
+    	<if test="id != null">
+    		where id=#{id}
+    	</if>
+    </select>
+    
+    <select id="findEmployeeWhen" parameterType="employee" resultType="employee">
+    	select * from employee
+    	<where>
+	    	<choose>
+	    		<when test="id != null">
+	    			id=#{id}
+	    		</when>
+	    		<otherwise>
+	    			and sex="nan"
+	    		</otherwise>
+	    	</choose>
+    	</where>
+    </select>
+    
+    <select id="updateSet" parameterType="employee">
+    	update employee
+    	<set>
+    		<if test="loginname != null">
+    			loginname=#{loginname}
+    		</if>
+    		<if test="password != null">
+    			password=#{password}
+    		</if>
+    		<if test="name != null">
+    			name=#{name}
+    		</if>
+    		<if test="sex != null">
+    			sex=#{sex}
+    		</if>
+    		<if test="age != null">
+    			age=#{age}
+    		</if>
+    		<if test="phone != null">
+    			phone=#{phone}
+    		</if>
+    		<if test="sal != null">
+    			sal=#{sal}
+    		</if>
+    		<if test="state != null">
+    			state=#{state}
+    		</if>
+    	</set>
+    	<where>
+    		id=#{id}
+    	</where>
+    </select>
+    
+    <select id="findEmployeeForeach" resultType="employee">
+    	select * from employee
+    	<where>
+	    	<foreach collection="list" separator="or" item="id">
+	    		id=#{id}
+	    	</foreach>
+    	</where>
+    </select>
+    
+    <select id="findEmployeeBind" resultType="employee">
+    	<bind name="pattern" value="'%' + _parameter.getName() + '%'"/>
+    	select * from `employee` where `sex` like #{pattern}
     </select>
 </mapper>

@@ -1,3 +1,4 @@
+
 package cn.marsma.mybatis.entity;
 
 public class Employee {
@@ -93,6 +94,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return id+","+","+loginname +","+password +","+name+","+sex+","+age+","+phone+","+sal+","+state;
+        return id+","+loginname +","+password +","+name+","+sex+","+age+","+phone+","+sal+","+state;
     }
 }
